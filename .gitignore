@@ -1,0 +1,22 @@
+# API keys — never commit
+api코드.py
+api.py
+api*.py
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Gemini
+.gemini/
+
+# Screenshots (optional, large files)
+# 스크린샷*.png
