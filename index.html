@@ -82,7 +82,7 @@
             </button>
           </div>
 
-          <div class="assess-body">
+          <div class="assess-body hidden" id="assessBody">
             <!-- Left: Progress Sidebar -->
             <aside class="assess-sidebar">
               <div class="step-nav" id="stepNav">
@@ -234,46 +234,11 @@
             </aside>
           </section>
 
-          <!-- Architecture Section -->
-          <section class="info-section" id="architectureSection">
-            <article>
-              <p class="kicker">시스템 구조</p>
-              <h2>이 구현은 동적 웹페이지가 맞습니다</h2>
-              <p>
-                설문 응답이 브라우저 상태를 바꾸고, 점수 산출 결과가 위젯 목록과 순서를 다시 만들며, 서버 API가
-                AI 상담 응답을 생성합니다. 단순 반응형 레이아웃이 아니라 상태 기반 SPA와 API 연동 구조입니다.
-              </p>
-            </article>
-            <pre class="schema-box"><code id="schemaCode"></code></pre>
-          </section>
-
-          <!-- JB Source Section -->
-          <section class="info-section info-section--jb">
-            <div>
-              <p class="kicker">JB금융그룹 · 준법 자료</p>
-              <h2>JB금융그룹 맥락과 권유 지침</h2>
-              <p>
-                전북은행, 광주은행, JB자산운용, JB우리캐피탈 상품군을 프로파일별 검토 후보로만 보여주고,
-                실제 권유 전에는 상품설명서와 위험등급, 적합성·적정성·설명의무 검증을 다시 요구합니다.
-              </p>
-            </div>
-            <div class="source-links" id="jbSourceList"></div>
-          </section>
-
-          <!-- Topic Source -->
-          <section class="info-section info-section--topic">
-            <div>
-              <p class="kicker">과제 주제 출처</p>
-              <h2>스크린샷 주제 반영</h2>
-              <p>
-                개인 라이프케어 AI, 생애주기/건강/보험/재무 데이터 결합, 고령 고객 Slow Banking UI, 이상거래
-                보호 흐름을 설문과 대시보드에 연결했습니다.
-              </p>
-            </div>
-            <figure>
-              <img src="./스크린샷 2026-06-09 오후 5.11.05.png" alt="개인 라이프케어 AI 과제 주제 스크린샷" />
-            </figure>
-          </section>
+          <!-- Floating AI Agent Button -->
+          <button class="fab-agent" id="fabAgent" type="button" aria-label="AI 상담 열기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span class="fab-label">AI 상담</span>
+          </button>
         </section>
       </main>
     </div>

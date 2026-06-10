@@ -402,6 +402,9 @@ const els = {
   investorClass: document.querySelector("#investorClass"),
   jbProductList: document.querySelector("#jbProductList"),
   jbSourceList: document.querySelector("#jbSourceList"),
+  assessBody: document.querySelector("#assessBody"),
+  assessHero: document.querySelector(".assess-hero"),
+  schemaCode: document.querySelector("#schemaCode"),
   restartAssessment: document.querySelector("#restartAssessment"),
   goDashboard: document.querySelector("#goDashboard"),
   goAgent: document.querySelector("#goAgent"),
@@ -974,16 +977,18 @@ function renderJbProducts(profile, investorClass, jbProducts) {
     })
     .join("");
 
-  els.jbSourceList.innerHTML = jbSources
-    .map(
-      (source) => `
-        <a href="${source.url}" target="_blank" rel="noreferrer">
-          ${source.label}
-          <span>${source.url}</span>
-        </a>
-      `,
-    )
-    .join("");
+  if (els.jbSourceList) {
+    els.jbSourceList.innerHTML = jbSources
+      .map(
+        (source) => `
+          <a href="${source.url}" target="_blank" rel="noreferrer">
+            ${source.label}
+            <span>${source.url}</span>
+          </a>
+        `,
+      )
+      .join("");
+  }
 }
 
 function getSchema(profile, allocation, policy, widgets, investorClass, jbProducts) {
@@ -1097,7 +1102,9 @@ function renderDashboard() {
   renderSignals();
   ensureInitialAgentMessage(profile, investorClass);
   renderMessages();
-  els.schemaCode.textContent = JSON.stringify(getSchema(profile, allocation, policy, widgets, investorClass, jbProducts), null, 2);
+  if (els.schemaCode) {
+    els.schemaCode.textContent = JSON.stringify(getSchema(profile, allocation, policy, widgets, investorClass, jbProducts), null, 2);
+  }
 }
 
 function showDashboard() {
@@ -1119,6 +1126,15 @@ function resetAssessment() {
   state.signals.lifeEvent = false;
   els.dashboardView.classList.add("hidden");
   els.assessmentView.classList.remove("hidden");
+  // Restore hero, hide survey body
+  if (els.assessHero) {
+    els.assessHero.classList.remove("dismissed", "hidden");
+    els.assessHero.style.display = '';
+  }
+  if (els.assessBody) {
+    els.assessBody.classList.add("hidden");
+    els.assessBody.classList.remove("entering");
+  }
   renderStep();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -1282,13 +1298,32 @@ els.goAgent.addEventListener("click", () => {
   document.querySelector("#agentColumn").scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-// Hero start button — scroll to survey
+// Hero start button — proper view transition (hide hero, show survey)
 const heroStartBtn = document.querySelector("#heroStartBtn");
 if (heroStartBtn) {
   heroStartBtn.addEventListener("click", () => {
-    const questionPanel = document.querySelector(".question-panel");
-    if (questionPanel) {
-      questionPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (els.assessHero) {
+      els.assessHero.classList.add("dismissed");
+      setTimeout(() => {
+        els.assessHero.style.display = 'none';
+        if (els.assessBody) {
+          els.assessBody.classList.remove("hidden");
+          els.assessBody.classList.add("entering");
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 320);
+    }
+  });
+}
+
+// Floating AI Agent button
+const fabAgent = document.querySelector("#fabAgent");
+if (fabAgent) {
+  fabAgent.addEventListener("click", () => {
+    if (!state.completed) return;
+    const agentCol = document.querySelector("#agentColumn");
+    if (agentCol) {
+      agentCol.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 }
